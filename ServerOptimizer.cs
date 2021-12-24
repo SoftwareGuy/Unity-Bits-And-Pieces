@@ -31,10 +31,12 @@ namespace Coburn.Toolbox
         {
             Debug.Log("Server Optimizations: Detected scene load, optimizing scene...");
 
-            // Find cameras and disable them, since servers don't need rendering.
+            // Find cameras to disable them, since servers don't need rendering.
             cameras = FindObjectsOfType<Camera>();
-
-            // Run through the list...
+            // Find audio sources in the scene to disable them too, since servers should be silent...
+            audioSources = FindObjectsOfType<AudioSource>();
+            
+            // Run through the camera list...
             for (int i = 0; i < cameras.Length; i++)
             {
                 if (cameras[i] == null) continue;
@@ -42,10 +44,7 @@ namespace Coburn.Toolbox
                 cameras[i].enabled = false;
             }
 
-            // Find audio sources in the scene and disable them too, since servers should be silent...
-            audioSources = FindObjectsOfType<AudioSource>();
-
-            // Run through the list...
+            // Run through the audio sources list...
             for (int i = 0; i < audioSources.Length; i++)
             {
                 if (audioSources[i] == null) continue;
